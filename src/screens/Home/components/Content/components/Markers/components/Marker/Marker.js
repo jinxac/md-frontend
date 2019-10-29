@@ -1,33 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "components/Button";
+import Edit from "./components/Edit";
+import Delete from "./components/Delete";
 
 
 const propTypes = {
-  marker: PropTypes.object.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired
+  marker: PropTypes.object.isRequired
 };
 
 
-const Marker = ({
-  onDelete,
-  onEdit,
-  marker
-}) => {
+const Marker = ({marker}) => {
   return (
     <div>
       <p>{marker.formattedAddress}</p>
       <p>{marker.geometry.location.lat}</p>
       <p>{marker.geometry.location.lng}</p>
-      <Button
-        description={"Delete"}
-        onClick={onDelete}
-      />
-      <Button
-        description={"Edit"}
-        onClick={onEdit}
-      />
+      <Edit marker={marker} />
+      <Delete />
     </div>
   );
 };

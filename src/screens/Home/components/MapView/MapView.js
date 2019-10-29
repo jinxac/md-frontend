@@ -7,26 +7,31 @@ import {
 
 
 const propTypes = {
-  google: PropTypes.object.isRequired
+  google: PropTypes.object.isRequired,
+  markers: PropTypes.array.isRequired
 };
 
-const MapView = ({google}) => {
+const MapView = ({
+  google,
+  markers
+}) => {
+  const content = [];
+  for (const marker of markers) {
+    content.push(
+      <Marker
+        position={{
+          lat: marker.geometry.location.lat,
+          lng: marker.geometry.location.lng
+        }}
+      />
+    );
+  }
   return (
     <Map
       google={google}
       style={{width: "50%"}}
-      zoom={14}
     >
-      <Marker
-        name={"SOMA"}
-        position={{lat: 37.778519, lng: -122.405640}}
-        title={"The marker`s title will appear as a tooltip."}
-      />
-      <Marker
-        name={"Dolores park"}
-        position={{lat: 37.759703, lng: -122.428093}}
-      />
-      <Marker />
+      {content}
     </Map>
   );
 };

@@ -1,16 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import {GoogleApiWrapper} from "google-maps-react";
 import MapView from "./MapView";
 
 const propTypes = {
-  google: PropTypes.object.isRequired
+  google: PropTypes.object.isRequired,
+  markers: PropTypes.array.isRequired
 };
 
 
 // TODO: Read from redux store later on
-const MapViewContainer = ({google}) => {
-  return <MapView google={google} />;
+const MapViewContainer = ({
+  markers,
+  google
+}) => {
+  return (
+    <MapView
+      google={google}
+      initialCenter={markers[0].geometry.location}
+      markers={markers}
+    />
+  );
 };
 
 const withMap = GoogleApiWrapper({
@@ -19,6 +30,12 @@ const withMap = GoogleApiWrapper({
 
 MapViewContainer.propTypes = propTypes;
 
-export default withMap(MapViewContainer);
+const mapStateToProps = (store) => ({
+  markers: store.markers
+});
+
+const withStore = connect(mapStateToProps);
+
+export default withStore(withMap(MapViewContainer));
 
 
