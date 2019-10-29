@@ -11,11 +11,11 @@ const propTypes = {
 const Markers = ({markers}) => {
   const content = [];
 
-  markers.map((marker) => {
+  for (const marker of markers) {
     content.push(
       <Marker marker={marker} />
     );
-  });
+  }
 
   return (
     <div>
