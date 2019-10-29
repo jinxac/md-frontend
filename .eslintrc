@@ -1,0 +1,368 @@
+{
+  "parserOptions": {
+      "ecmaVersion": 2019,
+      "sourceType": "module",
+      "ecmaFeatures": {
+          "jsx": true
+      }
+  },
+'parser': 'babel-eslint',
+'env': {
+  'es6': true,
+  "browser": true,
+  "node": true
+},
+'plugins': [
+  'react'
+],
+'globals': {
+  "CryptoJS": false,
+  "Intercom": true,
+  "__DEV__": false,
+  "XMLHttpRequest": true,
+  "LOG": false
+},
+'extends': ['eslint:recommended', 'plugin:react/recommended'],
+'rules': {
+  # Forbid certain propTypes (any, array, object)
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/forbid-prop-types.md
+  # 'react/forbid-prop-types': ['error', { forbid: ['any', 'array', 'object'] }],
+
+  # Enforce boolean attributes notation in JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-boolean-value.md
+  'react/jsx-boolean-value': ['error', 'never'],
+
+  # Validate closing bracket location in JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md
+  'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
+
+  # Enforce or disallow spaces inside of curly braces in JSX attributes
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-spacing.md
+  'react/jsx-curly-spacing': ['error', 'never', { allowMultiline: false }],
+
+  # Enforce or disallow spaces around equal signs in JSX attributes.
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-equals-spacing.md
+  'react/jsx-equals-spacing': ['error', 'never'],
+
+  # only .jsx files may have JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
+  'react/jsx-filename-extension': ['error', { extensions: ['.js','.jsx'] }],
+
+  #  Require that the first prop in a JSX element be on a new line when the element is multiline
+  #  https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-first-prop-new-line.md
+  'react/jsx-first-prop-new-line': ['error', 'multiline'],
+
+  # Validate props indentation in JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-indent-props.md
+  'react/jsx-indent-props': ['error', 2],
+
+  #Enforce JSX indentation
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-indent.md
+  'react/jsx-indent': ['error', 2],
+
+  #  Validate JSX has key prop when in array or iterator
+  #  https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-key.md
+  'react/jsx-key': ['warn'],
+
+  # Limit maximum of props on a single line in JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-max-props-per-line.md
+  'react/jsx-max-props-per-line': ['off', { maximum: 1 }],
+
+  # Prevent usage of .bind() in JSX props
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md
+  # TODO: Enable this afte fixing bind
+  # 'react/jsx-no-bind': ['error', {
+  #   ignoreRefs: true,
+  #   allowArrowFunctions: true,
+  #   allowBind: false,
+  # }],
+
+  # prevent accidental JS comments from being injected into JSX as text
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-comment-textnodes.md
+  'react/jsx-no-comment-textnodes': 'error',
+
+  # Prevent duplicate props in JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-duplicate-props.md
+  'react/jsx-no-duplicate-props': ['error', { ignoreCase: true }],
+
+  # Disallow undeclared variables in JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-undef.md
+  'react/jsx-no-undef': 'error',
+
+  # Enforce PascalCase for user-defined JSX components
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md
+  'react/jsx-pascal-case': ['error', {
+    allowAllCaps: false,
+    ignore: [],
+  }],
+
+  # Enforce props alphabetical sorting
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-sort-props.md
+  'react/jsx-sort-props' :['error', {
+    callbacksLast: true,
+    shorthandFirst: true,
+    shorthandLast: false,
+    ignoreCase: true
+  }],
+
+  # Enforce spaces before the closing bracket of self-closing JSX elements
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-space-before-closing.md
+  'react/jsx-space-before-closing': ['error', 'always'],
+
+  # Validate whitespace in and around the JSX opening and closing brackets
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-tag-spacing.md
+  'react/jsx-tag-spacing': ['error', {
+    closingSlash: 'never',
+    beforeSelfClosing: 'always',
+    afterOpening: 'never'
+  }],
+
+  # Prevent React to be incorrectly marked as unused
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-uses-react.md
+  'react/jsx-uses-react': ['error'],
+
+  # Prevent variables used in JSX to be incorrectly marked as unused
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-uses-vars.md
+  'react/jsx-uses-vars': 'error',
+
+  #  Prevent missing parentheses around multilines JSX
+  #  https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-wrap-multilines.md
+  'react/jsx-wrap-multilines': ['error', {
+    declaration: true,
+    assignment: true,
+    return: true
+  }],
+
+  # Prevent usage of Array index in keys
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
+  'react/no-array-index-key': 'error',
+
+  #Prevent passing of children as props
+  #https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-children-prop.md
+  'react/no-children-prop': 'error',
+
+
+  # Prevent usage of deprecated methods
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-deprecated.md
+  'react/no-deprecated': ['error'],
+
+
+  #Prevent direct mutation of this.state
+  #https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-direct-mutation-state.md
+  'react/no-direct-mutation-state': ['error'],
+
+  # Prevent multiple component definition per file
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md
+  'react/no-multi-comp': ['error', { ignoreStateless: true }],
+
+  # disallow using React.render/ReactDOM.render's return value
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-render-return-value.md
+  'react/no-render-return-value': 'error',
+
+  # Prevent invalid characters from appearing in markup
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unescaped-entities.md
+  'react/no-unescaped-entities': 'error',
+
+  # Prevent usage of unknown DOM property
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unknown-property.md
+  'react/no-unknown-property': 'error',
+
+  #  Prevent unused propType definitions
+  #  https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unused-prop-types.md
+  'react/no-unused-prop-types': ['error', {
+    customValidators: [
+    ],
+    skipShapeProps: true,
+  }],
+
+  # Require ES6 class declarations over React.createClass
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md
+  'react/prefer-es6-class': ['error', 'always'],
+
+  # Require stateless functions when not using lifecycle methods, setState or ref
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md
+  'react/prefer-stateless-function': 'error',
+
+  #  Prevent missing props validation in a React component definition
+  #  https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prop-types.md
+  'react/prop-types': ['error', { ignore: [], customValidators: [] }],
+
+  # Prevent missing React when using JSX
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md
+  'react/react-in-jsx-scope': 'error',
+
+  # Enforce a defaultProps definition for every prop that is not a required prop
+  #  https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-default-props.md
+  # 'react/require-default-props': 'error',
+
+  # Require render() methods to return something
+  # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-render-return.md
+  'react/require-render-return': 'error',
+
+  #Prevent extra closing tags for components without children
+  #https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md
+  'react/self-closing-comp': 'error',
+
+  #  Enforce component methods order
+  #  https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md
+  'react/sort-comp': ['error', {
+    order: [
+      'static-methods',
+      'lifecycle',
+      '/^on.+$/',
+      '/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/',
+      'everything-else',
+      '/^render.+$/',
+      'render'
+    ],
+  }],
+
+  #  Enforce propTypes declarations alphabetical sorting
+  #  https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-prop-types.md
+  'react/sort-prop-types': ['error', {
+    ignoreCase: true,
+    callbacksLast: false,
+    requiredFirst: false,
+  }],
+
+  #  Require style prop value be an object or var
+  #  https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/style-prop-object.md
+  'react/style-prop-object': 'error',
+
+  # require const declarations for variables that are never reassigned after declared
+  'prefer-const': 'error',
+
+  # require let or const instead of var
+  'no-var': 1,
+
+  # disallow Object constructors
+  'no-new-object': 'error',
+
+  # require or disallow method and property shorthand syntax for object literals
+  'object-shorthand': 'error',
+
+  # require quotes around object literal property names
+  'quote-props': ['error','as-needed'],
+
+  # disallow Array constructors
+  'no-array-constructor': 'error',
+
+  # enforce the consistent use of either backticks, double, or single quotes
+  'quotes': 'warn',
+
+  # require template literals instead of string concatenation
+  'prefer-template': 'error',
+
+  # Enforce Usage of Spacing in Template Strings
+  'template-curly-spacing': ['error','never'],
+
+  # 	disallow new operators with the Function object
+  'no-new-func': 'error',
+
+  # Require or disallow a space before function parenthesis
+  'space-before-function-paren':  ['error', {
+      'anonymous': 'always',
+      'named': 'always',
+      'asyncArrow': 'ignore'
+  }],
+
+  # enforce consistent spacing before blocks
+  'space-before-blocks': ['error','always'],
+
+  # enforce consistent spacing before and after the arrow in arrow functions
+  'arrow-spacing': ['error',{
+    'before': true,
+    'after': true
+  }],
+
+  # Disallow arrow functions where they could be confused with comparisons
+  'no-confusing-arrow': ["error", {"allowParens": false}],
+
+  # require or disallow trailing commas
+  'comma-dangle': 'error', #TODO: Get the logic once
+
+  # Require === and !==
+  'eqeqeq': ['error'],
+
+  # Require Brace Style
+  'brace-style':['error','1tbs'],
+
+  # Requires or disallows a whitespace (space or tab) beginning a comment
+  'spaced-comment':['error','always'],
+
+  # enforce consistent indentation
+  'indent': ['error', 2,{"SwitchCase":1}],
+
+  # enforce consistent spacing before and after keywords
+  'keyword-spacing': ['error',{
+    'before': true,
+    'after': true
+  }],
+
+  # require or disallow newline at the end of files
+  'eol-last': ['error','always'],
+
+  # require a newline after each call in a method chain
+  'newline-per-chained-call': ['error'],
+
+  # disallow whitespace before properties
+  'no-whitespace-before-property': ['error'],
+
+  # require or disallow padding within blocks
+  'padded-blocks': ['error','never'],
+
+
+
+  # Disallow or enforce spaces inside of parentheses
+  "space-in-parens": ["error", "never"],
+
+  # Disallow or enforce spaces inside of brackets
+  'array-bracket-spacing': ["error", "never"],
+
+  # Disallow or enforce spaces inside of brackets
+  'object-curly-spacing': ["error", "never"],
+
+  # Max length for code,comments etc..
+  # 'max-len': ['warn',{
+  #   'code': 80,
+  #   'tabWidth': 2,
+  #   'comments': 80,
+  #   'ignoreComments': false,
+  #
+  # }],
+
+  # Comma Style
+  'comma-style': ["error", "last"],
+
+  # Semi Colon
+  'semi': ['error','always'],
+
+  # Camelcase
+  'camelcase': ['error',{
+    'properties':'always'
+  }],
+
+  # Console
+  'no-console': 0,
+
+  'no-case-declarations': 0,
+
+  'react/no-string-refs': 0,
+
+
+# Allowing classes to be renamed for redux forms
+  'no-class-assign': 0,
+  # Imports should be first
+  #'import/first': ['error'],
+
+  'key-spacing': ["error", {
+    "afterColon": true,
+    "beforeColon": false
+  }],
+
+
+  "comma-spacing": ["error", { "before": false, "after": true }],
+
+  "space-infix-ops": "error"
+}
+}
