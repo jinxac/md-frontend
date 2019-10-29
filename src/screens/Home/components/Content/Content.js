@@ -1,15 +1,12 @@
 import React from "react";
-import Button from "components/Button";
+import Add from "./components/Add";
 import Markers from "./components/Markers";
 import styles from "./styles.css";
 
 const Content = () => {
   return (
     <div>
-      <Button
-        description={"Add Marker"}
-        onClick={() => {}}
-      />
+      <Add />
       <hr className={"hr"} />
       <Markers />
     </div>
