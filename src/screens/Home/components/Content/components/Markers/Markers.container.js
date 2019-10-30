@@ -9,6 +9,7 @@ const propTypes = {
 };
 
 const MarkersContainer = ({markers}) => {
+  console.log("markers", markers);
   return (
     <Markers markers={markers} />
   );

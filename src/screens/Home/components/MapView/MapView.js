@@ -20,8 +20,8 @@ const MapView = ({
     content.push(
       <Marker
         position={{
-          lat: marker.geometry.location.lat,
-          lng: marker.geometry.location.lng
+          lat: marker.lat,
+          lng: marker.lng
         }}
       />
     );

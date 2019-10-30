@@ -12,11 +12,11 @@ const propTypes = {
 const Marker = ({marker}) => {
   return (
     <div>
-      <p>{marker.formattedAddress}</p>
-      <p>{marker.geometry.location.lat}</p>
-      <p>{marker.geometry.location.lng}</p>
+      <p>{marker.description}</p>
+      <p>{marker.lat}</p>
+      <p>{marker.lng}</p>
       <Edit marker={marker} />
-      <Delete />
+      <Delete marker={marker} />
     </div>
   );
 };

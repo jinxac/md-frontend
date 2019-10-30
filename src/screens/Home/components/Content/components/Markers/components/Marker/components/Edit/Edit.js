@@ -14,7 +14,6 @@ const Edit = ({
   showModal,
   toggleModal
 }) => {
-  console.log("***", marker);
   return (
     <div>
       <Button

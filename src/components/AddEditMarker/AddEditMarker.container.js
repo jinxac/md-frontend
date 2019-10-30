@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import axios from "axios";
+import {GOOGLE_API_KEY} from "constants";
 import {
   addMarker,
   editMarker
 } from "data/markers/actions";
 import AddEditMarker from "./AddEditMarker";
+import axios from "api/axios";
 
 const defaultProps = {
   isEdit: false,
@@ -29,48 +30,88 @@ class AddEditMarkerContainer extends React.Component {
     name: "",
     lat: 0,
     lng: 0,
-    address: ""
+    description: "",
+    initialPlaceId: "",
+    placeId: ""
   }
 
 
   componentDidMount () {
     const {marker} = this.props;
-    // console.log("marker", marker);
-    // if (!marker) {
-    //   return null;
-    // }
     this.setState({
-      lat: marker.geometry.location.lat,
-      lng: marker.geometry.location.lng,
-      address: marker.formattedAddress
+      lat: marker.lat,
+      lng: marker.lng,
+      description: marker.description,
+      initialPlaceId: marker.placeId
     });
   }
 
   onLocationChange  = (event) => {
-    this.setState({address: event.target.value});
+    this.setState({description: event.target.value});
     const searchText = event.target.value;
     if (searchText.length < 3) {
       return;
     }
-    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchText}&key="AIzaSyCGSqfC1AC1UgsvgZl2uH3QyQBZ8uFOu38"`;
+    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchText}&key=${GOOGLE_API_KEY}`;
     axios.get(url)
-      .then(response => this.updateResults(response.data.predictions))
-      .catch(err => console.log(err));
+      .then((response) => {
+        console.log("response", response.data);
+        this.updateResults(response.data.predictions);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  onSubmit = () => {
+  onLocationSelect = (placeId) => {
+    this.setState({
+      placeId
+    });
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`;
+    axios.get(url)
+      .then(({data}) => {
+        const {
+          geometry,
+          formattedAddress
+        } = data.result;
+        const {location} = geometry;
+        this.setState({
+          lat: location.lat,
+          lng: location.lng,
+          description: formattedAddress
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  onSubmit = (event) => {
     const {
       isEdit,
-      addMarker,
-      editMarker
+      editMarker,
+      addMarker
     } = this.props;
-    return null;
-    if (isEdit) {
-      editMarker();
-      return null;
-    }
+    const {
+      lat,
+      lng,
+      description,
+      placeId,
+      initialPlaceId
+    } = this.state;
+    const payload = {
+      lat,
+      lng,
+      description,
+      placeId
+    };
 
-    addMarker();
+    if (isEdit) {
+      editMarker(payload, initialPlaceId);
+    } else {
+      addMarker(payload);
+    }
+    event.preventDefault();
   }
 
   onNameChange = (event) => {
@@ -80,20 +121,23 @@ class AddEditMarkerContainer extends React.Component {
   }
 
   updateResults = (data) => {
-    const results = [];
+    const searchResults = [];
     data.map((datum) => {
-      results.push({
-        description: datum.description,
-        placeId: datum.place_id,
-        terms: datum.terms
+      const {
+        description,
+        placeId
+      } = datum;
+      searchResults.push({
+        description,
+        placeId
       });
     });
-    this.setState({results});
+    this.setState({searchResults});
   }
 
   render () {
     const {
-      address,
+      description,
       searchResults,
       lat,
       lng
@@ -106,13 +150,14 @@ class AddEditMarkerContainer extends React.Component {
 
     return (
       <AddEditMarker
-        address={address}
+        description={description}
         lat={lat}
         lng={lng}
         searchResults={searchResults}
         showModal={showModal}
         toggleModal={toggleModal}
         onLocationChange={this.onLocationChange}
+        onLocationSelect={this.onLocationSelect}
         onNameChange={this.onNameChange}
         onSubmit={this.onSubmit}
       />
@@ -121,11 +166,11 @@ class AddEditMarkerContainer extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addMarker: () => {
-    dispatch(addMarker());
+  addMarker: (payload) => {
+    dispatch(addMarker(payload));
   },
-  editMarker: () => {
-    dispatch(editMarker());
+  editMarker: (payload, initialPlaceId) => {
+    dispatch(editMarker(payload, initialPlaceId));
   }
 });
 
