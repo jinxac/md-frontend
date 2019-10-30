@@ -14,6 +14,7 @@ const Markers = ({markers}) => {
   for (const marker of markers) {
     content.push(
       <Marker
+        key={marker.placeId}
         marker={marker}
       />
     );

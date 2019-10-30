@@ -52,7 +52,7 @@ const AddEditMarker = ({
           </label>
           <label>
             Longitude:
-            <input disabled type="text" value={lat} />
+            <input disabled type="text" value={lng} />
           </label>
           <input type="submit" value="Submit" />
         </form>

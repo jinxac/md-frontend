@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {GoogleApiWrapper} from "google-maps-react";
-import {GOOGLE_API_KEY} from "constants";
+import {GOOGLE_API_KEY} from "wconstants";
 import MapView from "./MapView";
 
 const propTypes = {

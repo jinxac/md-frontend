@@ -19,6 +19,7 @@ const MapView = ({
   for (const marker of markers) {
     content.push(
       <Marker
+        key={marker.placeId}
         position={{
           lat: marker.lat,
           lng: marker.lng

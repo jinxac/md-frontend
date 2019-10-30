@@ -25,6 +25,7 @@ class DeleteContainer extends React.Component {
       placeId
     };
     deleteMarker(payload);
+    this.toggleModal();
   }
 
   toggleModal = () => {

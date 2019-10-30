@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {GOOGLE_API_KEY} from "constants";
+import {GOOGLE_API_KEY} from "wconstants";
 import {
   addMarker,
   editMarker
 } from "data/markers/actions";
 import AddEditMarker from "./AddEditMarker";
 import axios from "api/axios";
+import AutoCompleteModel from "models/AutoCompleteModel";
+import PlaceModel from "models/PlaceModel";
 
 const defaultProps = {
   isEdit: false,
@@ -55,7 +57,6 @@ class AddEditMarkerContainer extends React.Component {
     const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchText}&key=${GOOGLE_API_KEY}`;
     axios.get(url)
       .then((response) => {
-        console.log("response", response.data);
         this.updateResults(response.data.predictions);
       })
       .catch((error) => {
@@ -70,15 +71,12 @@ class AddEditMarkerContainer extends React.Component {
     const url = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`;
     axios.get(url)
       .then(({data}) => {
-        const {
-          geometry,
-          formattedAddress
-        } = data.result;
-        const {location} = geometry;
+        const placeModel = PlaceModel.init(data.result);
+        console.log("placemodel", placeModel.lat, placeModel.lng);
         this.setState({
-          lat: location.lat,
-          lng: location.lng,
-          description: formattedAddress
+          lat: placeModel.lat,
+          lng: placeModel.lng,
+          description: placeModel.description
         });
       })
       .catch((error) => {
@@ -87,11 +85,13 @@ class AddEditMarkerContainer extends React.Component {
   }
 
   onSubmit = (event) => {
+    event.preventDefault();
     const {
       isEdit,
       editMarker,
       addMarker
     } = this.props;
+
     const {
       lat,
       lng,
@@ -99,6 +99,8 @@ class AddEditMarkerContainer extends React.Component {
       placeId,
       initialPlaceId
     } = this.state;
+
+
     const payload = {
       lat,
       lng,
@@ -111,7 +113,7 @@ class AddEditMarkerContainer extends React.Component {
     } else {
       addMarker(payload);
     }
-    event.preventDefault();
+    this.props.toggleModal();
   }
 
   onNameChange = (event) => {
@@ -122,16 +124,17 @@ class AddEditMarkerContainer extends React.Component {
 
   updateResults = (data) => {
     const searchResults = [];
-    data.map((datum) => {
+    for (const datum of data) {
+      const autoCompleteModel = AutoCompleteModel.init(datum);
       const {
         description,
         placeId
-      } = datum;
+      } = autoCompleteModel;
       searchResults.push({
         description,
         placeId
       });
-    });
+    }
     this.setState({searchResults});
   }
 
