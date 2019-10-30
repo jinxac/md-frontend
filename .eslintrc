@@ -20,7 +20,10 @@
   "Intercom": true,
   "__DEV__": false,
   "XMLHttpRequest": true,
-  "LOG": false
+  "LOG": false,
+  "describe": false,
+  "expect": false,
+  "it": false
 },
 'extends': ['eslint:recommended', 'plugin:react/recommended'],
 'rules': {

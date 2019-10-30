@@ -38,7 +38,7 @@ const MapView = ({
         lat: 37.4267861,
         lng: -122.0806032
       }}
-      zoom={5}
+      zoom={6}
     >
       {content}
     </Map>

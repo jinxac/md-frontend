@@ -32,7 +32,6 @@ class SearchResultsContainer extends React.Component {
   handleClickOutside (event) {
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
       this.props.closeSearchResults();
-      // alert('You clicked outside of me!');
     }
   }
 

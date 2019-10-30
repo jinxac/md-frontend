@@ -17,6 +17,8 @@
     "redux": "^4.0.4"
   },
   "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint-config-eslint": "5.0.1",
     "eslint-friendly-formatter": "4.0.1",
     "eslint-loader": "2.1.2",
