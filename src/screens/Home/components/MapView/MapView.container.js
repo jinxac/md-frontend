@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {GoogleApiWrapper} from "google-maps-react";
+import {GOOGLE_API_KEY} from "wconstants";
 import MapView from "./MapView";
 
 const propTypes = {
@@ -10,7 +11,6 @@ const propTypes = {
 };
 
 
-// TODO: Read from redux store later on
 const MapViewContainer = ({
   markers,
   google
@@ -18,15 +18,12 @@ const MapViewContainer = ({
   return (
     <MapView
       google={google}
-      initialCenter={markers[0].geometry.location}
       markers={markers}
     />
   );
 };
 
-const withMap = GoogleApiWrapper({
-  apiKey: "AIzaSyCGSqfC1AC1UgsvgZl2uH3QyQBZ8uFOu38"
-});
+const withMap = GoogleApiWrapper({apiKey: GOOGLE_API_KEY});
 
 MapViewContainer.propTypes = propTypes;
 

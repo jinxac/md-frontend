@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {deleteMarker} from "data/markers/actions";
 import Delete from "./Delete";
 
 const propTypes = {
+  deleteMarker: PropTypes.func.isRequired,
   marker: PropTypes.object.isRequired
 };
 
@@ -12,7 +15,17 @@ class DeleteContainer extends React.Component {
   }
 
   onDelete = () => {
+    const {
+      deleteMarker,
+      marker
+    } = this.props;
 
+    const {placeId} = marker;
+    const payload = {
+      placeId
+    };
+    deleteMarker(payload);
+    this.toggleModal();
   }
 
   toggleModal = () => {
@@ -35,6 +48,15 @@ class DeleteContainer extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteMarker: (payload) => {
+    dispatch(deleteMarker(payload));
+  }
+});
+
+const withStore = connect(null, mapDispatchToProps);
+
+
 DeleteContainer.propTypes = propTypes;
 
-export default DeleteContainer;
+export default withStore(DeleteContainer);
