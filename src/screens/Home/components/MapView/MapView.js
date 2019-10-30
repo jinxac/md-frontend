@@ -29,8 +29,16 @@ const MapView = ({
   }
   return (
     <Map
+      center={{
+        lat: markers && markers.length && markers[0].lat,
+        lng: markers && markers.length && markers[0].lng
+      }}
       google={google}
-      style={{width: "50%"}}
+      initialCenter={{
+        lat: 37.4267861,
+        lng: -122.0806032
+      }}
+      zoom={6}
     >
       {content}
     </Map>

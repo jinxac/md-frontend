@@ -28,7 +28,7 @@ const propTypes = {
 
 class AddEditMarkerContainer extends React.Component {
   state = {
-    searchResults: "",
+    searchResults: [],
     name: "",
     lat: 0,
     lng: 0,
@@ -72,7 +72,6 @@ class AddEditMarkerContainer extends React.Component {
     axios.get(url)
       .then(({data}) => {
         const placeModel = PlaceModel.init(data.result);
-        console.log("placemodel", placeModel.lat, placeModel.lng);
         this.setState({
           lat: placeModel.lat,
           lng: placeModel.lng,
@@ -122,6 +121,12 @@ class AddEditMarkerContainer extends React.Component {
     });
   }
 
+  closeSearchResults = () => {
+    this.setState({
+      searchResults: []
+    });
+  }
+
   updateResults = (data) => {
     const searchResults = [];
     for (const datum of data) {
@@ -153,6 +158,7 @@ class AddEditMarkerContainer extends React.Component {
 
     return (
       <AddEditMarker
+        closeSearchResults={this.closeSearchResults}
         description={description}
         lat={lat}
         lng={lng}

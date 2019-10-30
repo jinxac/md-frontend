@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Marker from "./components/Marker";
+import styles from "./Markers.module.css";
 
 
 const propTypes = {
@@ -21,7 +22,7 @@ const Markers = ({markers}) => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       {content}
     </div>
   );

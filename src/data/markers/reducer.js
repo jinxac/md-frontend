@@ -1,3 +1,9 @@
+import {
+  ADD_MARKER,
+  DELETE_MARKER,
+  EDIT_MARKER
+} from "./actions";
+
 const initialState = [
   {
     description: "Test address 1",
@@ -9,16 +15,16 @@ const initialState = [
 
 const markers = (state = initialState, action) => {
   switch (action.type) {
-    case "ADD_MARKER":
+    case ADD_MARKER:
       return [
         ...state,
         action.payload
       ];
-    case "DELETE_MARKER":
+    case DELETE_MARKER:
       return state.filter((el) => {
         return el.placeId !== action.payload.placeId;
       });
-    case "EDIT_MARKER":
+    case EDIT_MARKER:
       const nextState = [];
       for (const [index, datum] of state.entries()) {
         if (datum.placeId === action.initialPlaceId) {

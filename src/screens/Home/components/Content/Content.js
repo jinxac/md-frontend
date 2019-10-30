@@ -1,13 +1,13 @@
 import React from "react";
 import Add from "./components/Add";
 import Markers from "./components/Markers";
-import styles from "./styles.css";
+import styles from "./Content.module.css";
 
 const Content = () => {
   return (
-    <div>
+    <div className={styles.container}>
       <Add />
-      <hr className={"hr"} />
+      <hr className={styles.hr} />
       <Markers />
     </div>
   );

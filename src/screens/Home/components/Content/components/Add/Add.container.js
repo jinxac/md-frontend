@@ -1,12 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
 import Add from "./Add";
-import {addMarker} from "data/markers/actions";
-
-const propTypes = {
-  addMarker: PropTypes.func.isRequired
-};
 
 
 class AddContainer extends React.Component {
@@ -32,15 +25,7 @@ class AddContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  addMarker: () => {
-    dispatch(addMarker());
-  }
-});
 
-AddContainer.propTypes = propTypes;
 
-const withStore = connect(null, mapDispatchToProps);
-
-export default withStore(AddContainer);
+export default AddContainer;
 
