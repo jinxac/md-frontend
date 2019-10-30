@@ -1,0 +1,9 @@
+.mapContainer {
+  width: 50%;
+  height: 100vh;
+  position: absolute;
+}
+
+.contentContainer {
+  margin-left: 51%;
+}

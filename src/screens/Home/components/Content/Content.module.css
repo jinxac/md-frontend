@@ -1,0 +1,9 @@
+.container {
+  height: 100vh;
+  padding-top: 25px;
+}
+
+.hr {
+  margin: 20px 0 20px 0;
+  border: 0.5px solid #E0E0E0;
+}

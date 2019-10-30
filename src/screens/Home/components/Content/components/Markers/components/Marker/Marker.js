@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Edit from "./components/Edit";
 import Delete from "./components/Delete";
+import styles from "./Marker.module.css";
 
 
 const propTypes = {
@@ -11,12 +12,23 @@ const propTypes = {
 
 const Marker = ({marker}) => {
   return (
-    <div>
-      <p>{marker.description}</p>
-      <p>{marker.lat}</p>
-      <p>{marker.lng}</p>
-      <Edit marker={marker} />
-      <Delete marker={marker} />
+    <div className={styles.container}>
+      <h3 className={`${styles.text} ${styles.heading}`}>
+        {marker.description}
+      </h3>
+      <span className={`${styles.text} ${styles.description}`}>
+        Latitude: {marker.lat}
+      </span>
+      <span className={`${styles.text} ${styles.description}`}>
+        Longitude: {marker.lng}
+      </span>
+      <div className={styles.actions}>
+        <Edit marker={marker} />
+        &nbsp;
+        <span>Or</span>
+        &nbsp;
+        <Delete marker={marker} />
+      </div>
     </div>
   );
 };

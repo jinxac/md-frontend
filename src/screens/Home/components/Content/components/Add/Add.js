@@ -15,6 +15,7 @@ const Add = ({
   return (
     <div>
       <Button
+        isPrimary
         description={"Add Marker"}
         onClick={toggleModal}
       />
