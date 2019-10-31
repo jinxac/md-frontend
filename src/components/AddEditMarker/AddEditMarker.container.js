@@ -67,7 +67,7 @@ class AddEditMarkerContainer extends React.Component {
         this.updateResults(response.data.predictions);
       })
       .catch((error) => {
-
+        console.log("error", error);
       });
   }
 

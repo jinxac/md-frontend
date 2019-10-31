@@ -6,7 +6,6 @@ import {
   deleteMarker,
   editMarker
 } from "../actions";
-import { edit } from "external-editor";
 
 describe("actions", () => {
   it("should create an action to add a marker", () => {

@@ -23,7 +23,8 @@
   "LOG": false,
   "describe": false,
   "expect": false,
-  "it": false
+  "it": false,
+  "jest": false
 },
 'extends': ['eslint:recommended', 'plugin:react/recommended'],
 'rules': {
