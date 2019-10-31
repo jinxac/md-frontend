@@ -35,8 +35,8 @@ const MapView = ({
       }}
       google={google}
       initialCenter={{
-        lat: 37.4267861,
-        lng: -122.0806032
+        lat: markers && markers.length && markers[0].lat,
+        lng: markers && markers.length && markers[0].lng
       }}
       zoom={6}
     >

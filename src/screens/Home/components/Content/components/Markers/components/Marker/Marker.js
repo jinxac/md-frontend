@@ -14,8 +14,11 @@ const Marker = ({marker}) => {
   return (
     <div className={styles.container}>
       <h3 className={`${styles.text} ${styles.heading}`}>
-        {marker.description}
+        {marker.name}
       </h3>
+      <span className={`${styles.text} ${styles.description}`}>
+        {marker.description}
+      </span>
       <span className={`${styles.text} ${styles.description}`}>
         Latitude: {marker.lat}
       </span>

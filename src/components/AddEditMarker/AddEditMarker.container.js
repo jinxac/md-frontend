@@ -7,11 +7,14 @@ import {
 } from "data/markers/actions";
 import AddEditMarker from "./AddEditMarker";
 import axios from "api/axios";
-import AutoCompleteModel from "models/AutoCompleteModel";
-import PlaceModel from "models/PlaceModel";
+import MarkerModel from "models/MarkerModel";
+// import AutoCompleteModel from "models/AutoCompleteModel";
+// import PlaceModel from "models/PlaceModel";
 import {
   AUTOCOMPLETE_END_POINT,
-  PLACE_END_POINT
+  PLACE_END_POINT,
+  POST_MARKER,
+  UPDATE_MARKER
 } from "api/endPoints";
 
 const defaultProps = {
@@ -36,7 +39,6 @@ class AddEditMarkerContainer extends React.Component {
     lat: 0,
     lng: 0,
     description: "",
-    initialPlaceId: "",
     placeId: ""
   }
 
@@ -44,10 +46,11 @@ class AddEditMarkerContainer extends React.Component {
   componentDidMount () {
     const {marker} = this.props;
     this.setState({
+      name: marker.name,
       lat: marker.lat,
       lng: marker.lng,
       description: marker.description,
-      initialPlaceId: marker.placeId
+      placeId: marker.placeId
     });
   }
 
@@ -64,26 +67,29 @@ class AddEditMarkerContainer extends React.Component {
         this.updateResults(response.data.predictions);
       })
       .catch((error) => {
-        console.log(error);
+
       });
   }
 
   onLocationSelect = (placeId) => {
+    console.log("location selected", placeId);
     this.setState({
       placeId
     });
     const url = PLACE_END_POINT.format(placeId);
     axios.get(url)
       .then(({data}) => {
-        const placeModel = PlaceModel.init(data.result);
+        const markerModel = MarkerModel.init(data.result);
+        markerModel.initPlace(data.result.geometry);
         this.setState({
-          lat: placeModel.lat,
-          lng: placeModel.lng,
-          description: placeModel.description
+          lat: markerModel.lat,
+          lng: markerModel.lng,
+          description: markerModel.description,
+          placeId: markerModel.placeId
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error", error);
       });
   }
 
@@ -92,29 +98,48 @@ class AddEditMarkerContainer extends React.Component {
     const {
       isEdit,
       editMarker,
-      addMarker
+      addMarker,
+      marker
     } = this.props;
 
     const {
+      name,
       lat,
       lng,
       description,
-      placeId,
-      initialPlaceId
+      placeId
     } = this.state;
 
 
     const payload = {
+      name,
       lat,
       lng,
       description,
       placeId
     };
 
+
     if (isEdit) {
-      editMarker(payload, initialPlaceId);
+      const url = UPDATE_MARKER.format(marker.id);
+      payload.id = marker.id;
+      axios.put(url, payload)
+        .then(({data}) => {
+          const markerModel = MarkerModel.init(data);
+          editMarker(markerModel, marker.placeId);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
     } else {
-      addMarker(payload);
+      axios.post(POST_MARKER, payload)
+        .then(({data}) => {
+          const markerModel = MarkerModel.init(data);
+          addMarker(markerModel);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
     }
     this.props.toggleModal();
   }
@@ -134,11 +159,13 @@ class AddEditMarkerContainer extends React.Component {
   updateResults = (data) => {
     const searchResults = [];
     for (const datum of data) {
-      const autoCompleteModel = AutoCompleteModel.init(datum);
+      const markerModel = MarkerModel.init(datum);
       const {
         description,
         placeId
-      } = autoCompleteModel;
+      } = markerModel;
+
+
       searchResults.push({
         description,
         placeId
@@ -152,7 +179,8 @@ class AddEditMarkerContainer extends React.Component {
       description,
       searchResults,
       lat,
-      lng
+      lng,
+      name
     } = this.state;
 
     const {
@@ -160,12 +188,15 @@ class AddEditMarkerContainer extends React.Component {
       toggleModal
     } = this.props;
 
+    console.log("state", this.state);
+
     return (
       <AddEditMarker
         closeSearchResults={this.closeSearchResults}
         description={description}
         lat={lat}
         lng={lng}
+        name={name}
         searchResults={searchResults}
         showModal={showModal}
         toggleModal={toggleModal}
