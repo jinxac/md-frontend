@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {GOOGLE_API_KEY} from "wconstants";
 import {
   addMarker,
   editMarker
@@ -10,6 +9,10 @@ import AddEditMarker from "./AddEditMarker";
 import axios from "api/axios";
 import AutoCompleteModel from "models/AutoCompleteModel";
 import PlaceModel from "models/PlaceModel";
+import {
+  AUTOCOMPLETE_END_POINT,
+  PLACE_END_POINT
+} from "api/endPoints";
 
 const defaultProps = {
   isEdit: false,
@@ -54,7 +57,8 @@ class AddEditMarkerContainer extends React.Component {
     if (searchText.length < 3) {
       return;
     }
-    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchText}&key=${GOOGLE_API_KEY}`;
+
+    const url = AUTOCOMPLETE_END_POINT.format(searchText);
     axios.get(url)
       .then((response) => {
         this.updateResults(response.data.predictions);
@@ -68,7 +72,7 @@ class AddEditMarkerContainer extends React.Component {
     this.setState({
       placeId
     });
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${GOOGLE_API_KEY}`;
+    const url = PLACE_END_POINT.format(placeId);
     axios.get(url)
       .then(({data}) => {
         const placeModel = PlaceModel.init(data.result);

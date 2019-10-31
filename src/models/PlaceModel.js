@@ -9,8 +9,6 @@ class PlaceModel {
       marker = {};
     }
 
-    console.log("data", marker);
-
     const {
       description,
       placeId,
