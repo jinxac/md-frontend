@@ -25,7 +25,6 @@ describe("<Button />", () => {
         onClick={onClick}
       />
     );
-    // console.log(wrapper.props());
     expect(wrapper.prop("className")).toEqual("button primary");
   });
 
@@ -38,7 +37,6 @@ describe("<Button />", () => {
         onClick={onClick}
       />
     );
-    // console.log(wrapper.props());
     expect(wrapper.prop("className")).toEqual("button");
   });
 
@@ -51,7 +49,6 @@ describe("<Button />", () => {
         onClick={onClick}
       />
     );
-    // console.log(wrapper.props());
     expect(wrapper.prop("className")).toEqual("button");
   });
 

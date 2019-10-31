@@ -21,6 +21,14 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
+String.prototype.format = function () {
+  let i = 0;
+  const args = arguments;
+  return this.replace(/{}/g, function () {
+    return typeof args[i] !== "undefined" ? args[i++] : "";
+  });
+};
+
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
