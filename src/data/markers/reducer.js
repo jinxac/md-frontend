@@ -4,14 +4,7 @@ import {
   EDIT_MARKER
 } from "./actions";
 
-const initialState = [
-  {
-    description: "Test address 1",
-    placeId: "ChIJtYuu0V25j4ARwu5e4wwRYgE",
-    lat: 37.4267861,
-    lng: -122.0806032
-  }
-];
+const initialState = [];
 
 const markers = (state = initialState, action) => {
   switch (action.type) {

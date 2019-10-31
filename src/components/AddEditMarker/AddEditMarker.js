@@ -21,6 +21,7 @@ const propTypes = {
   description: PropTypes.string.isRequired,
   lat: PropTypes.number.isRequired,
   lng: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
   onLocationChange: PropTypes.func.isRequired,
   onLocationSelect: PropTypes.func.isRequired,
   onNameChange: PropTypes.func.isRequired,
@@ -36,6 +37,7 @@ const AddEditMarker = ({
   description,
   lat,
   lng,
+  name,
   onLocationChange,
   onLocationSelect,
   onNameChange,
@@ -63,6 +65,7 @@ const AddEditMarker = ({
               <Input
                 placeholder="My Location..."
                 type="text"
+                value={name}
                 onChange={onNameChange}
               />
             </FormGroup>

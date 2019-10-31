@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {deleteMarker} from "data/markers/actions";
+import {DELETE_MARKER} from "api/endPoints";
+import axios from "api/axios";
 import Delete from "./Delete";
+
 
 const propTypes = {
   deleteMarker: PropTypes.func.isRequired,
@@ -24,8 +27,16 @@ class DeleteContainer extends React.Component {
     const payload = {
       placeId
     };
-    deleteMarker(payload);
-    this.toggleModal();
+    const url = DELETE_MARKER.format(marker.id);
+    axios.delete(url, payload)
+      .then(() => {
+        this.toggleModal();
+        deleteMarker(payload);
+      })
+      .catch((error) => {
+        this.toggleModal();
+        console.log("error", error);
+      });
   }
 
   toggleModal = () => {
