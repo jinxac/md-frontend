@@ -1,9 +1,33 @@
 import React from "react";
 import Home from "screens/Home";
+import {
+  Online,
+  Offline
+} from "react-detect-offline";
 
 
 const App = () => {
-  return <Home />;
+  return (
+    <div>
+      <Online>
+        <Home />
+      </Online>
+      <Offline>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100vh",
+            flexDirection: "column"
+          }}
+        >
+          <h3>No Internet Connection</h3>
+          <span>Please check your internet connection</span>
+        </div>
+      </Offline>
+    </div>
+  );
 };
 
 export default App;

@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   addMarker,
   editMarker
@@ -14,6 +16,7 @@ import {
   POST_MARKER,
   UPDATE_MARKER
 } from "api/endPoints";
+import CustomToast from "wutils/toast";
 
 const defaultProps = {
   isEdit: false,
@@ -71,10 +74,14 @@ class AddEditMarkerContainer extends React.Component {
     this.setState({showAddressSpinner: true});
     axios.get(url)
       .then(({data}) => {
+        if (data.status !== "OK") {
+          CustomToast.errorMaps(data.errorMessage);
+          return null;
+        }
         this.updateSearchResults(data.predictions);
       })
       .catch((error) => {
-        console.log("error", error);
+        CustomToast.errorMaps(error.errorMessage);
       })
       .finally(() => {
         this.setState({showAddressSpinner: false});
@@ -85,6 +92,10 @@ class AddEditMarkerContainer extends React.Component {
     const url = PLACE_END_POINT.format(placeId);
     axios.get(url)
       .then(({data}) => {
+        if (data.status !== "OK") {
+          CustomToast.errorMaps(data.errorMessage);
+          return null;
+        }
         const markerModel = MarkerModel.init(data.result);
         markerModel.initPlace(data.result.geometry);
         this.setState({
@@ -95,7 +106,7 @@ class AddEditMarkerContainer extends React.Component {
         });
       })
       .catch((error) => {
-        console.log("error", error);
+        CustomToast.errorMaps(error.errorMessage);
       });
   }
 
@@ -132,19 +143,21 @@ class AddEditMarkerContainer extends React.Component {
       axios.put(url, payload)
         .then(({data}) => {
           const markerModel = MarkerModel.init(data);
+          CustomToast.success("Marker edited successfully");
           editMarker(markerModel, marker.placeId);
         })
         .catch((error) => {
-          console.log("error", error);
+          CustomToast.error(error);
         });
     } else {
       axios.post(POST_MARKER, payload)
         .then(({data}) => {
           const markerModel = MarkerModel.init(data);
+          CustomToast.success("Marker added successfully");
           addMarker(markerModel);
         })
         .catch((error) => {
-          console.log("error", error);
+          CustomToast.error(error);
         });
     }
     this.props.toggleModal();
@@ -224,25 +237,29 @@ class AddEditMarkerContainer extends React.Component {
     const isSubmitDisabled = this.isButtonSubmitDisabled();
 
     return (
-      <AddEditMarker
-        closeSearchResults={this.closeSearchResults}
-        description={description}
-        hideInvalidAddress={this.hideInvalidAddress}
-        isEdit={isEdit}
-        isInvalidAddress={isInvalidAddress}
-        isSubmitDisabled={isSubmitDisabled}
-        lat={lat}
-        lng={lng}
-        name={name}
-        searchResults={searchResults}
-        showAddressSpinner={showAddressSpinner}
-        showModal={showModal}
-        toggleModal={toggleModal}
-        onLocationChange={this.onLocationChange}
-        onLocationSelect={this.onLocationSelect}
-        onNameChange={this.onNameChange}
-        onSubmit={this.onSubmit}
-      />
+      <div>
+        <AddEditMarker
+          closeSearchResults={this.closeSearchResults}
+          description={description}
+          hideInvalidAddress={this.hideInvalidAddress}
+          isEdit={isEdit}
+          isInvalidAddress={isInvalidAddress}
+          isSubmitDisabled={isSubmitDisabled}
+          lat={lat}
+          lng={lng}
+          name={name}
+          searchResults={searchResults}
+          showAddressSpinner={showAddressSpinner}
+          showModal={showModal}
+          toggleModal={toggleModal}
+          onLocationChange={this.onLocationChange}
+          onLocationSelect={this.onLocationSelect}
+          onNameChange={this.onNameChange}
+          onSubmit={this.onSubmit}
+        />
+        <ToastContainer />
+      </div>
+
     );
   }
 }

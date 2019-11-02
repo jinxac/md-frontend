@@ -171,7 +171,7 @@ const AddEditMarker = ({
               disabled={isSubmitDisabled}
               type="submit"
             >
-              {isEdit ? "EDIT": "ADD"}
+              {isEdit ? "SAVE" : "ADD"}
             </Button>
             <div className={styles.cancelButtonContainer}>
               <Button
