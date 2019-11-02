@@ -45,9 +45,7 @@ class HomeContainer extends React.Component {
       return null;
     }
     return (
-      <div>
-        <Home />
-      </div>
+      <Home />
     );
   }
 }
