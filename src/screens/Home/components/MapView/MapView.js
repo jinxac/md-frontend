@@ -19,7 +19,7 @@ const MapView = ({
   for (const marker of markers) {
     content.push(
       <Marker
-        key={marker.placeId}
+        key={marker.id}
         position={{
           lat: marker.lat,
           lng: marker.lng
@@ -38,7 +38,7 @@ const MapView = ({
         lat: markers && markers.length && markers[0].lat,
         lng: markers && markers.length && markers[0].lng
       }}
-      zoom={6}
+      zoom={5}
     >
       {content}
     </Map>

@@ -74,10 +74,6 @@ class AddEditMarkerContainer extends React.Component {
     this.setState({showAddressSpinner: true});
     axios.get(url)
       .then(({data}) => {
-        if (data.status !== "OK") {
-          CustomToast.errorMaps(data.errorMessage);
-          return null;
-        }
         this.updateSearchResults(data);
       })
       .catch((error) => {
@@ -92,10 +88,6 @@ class AddEditMarkerContainer extends React.Component {
     const url = PLACE_END_POINT.format(placeId);
     axios.get(url)
       .then(({data}) => {
-        if (data.status !== "OK") {
-          CustomToast.errorMaps(data.errorMessage);
-          return null;
-        }
         const markerModel = MarkerModel.init(data.result);
         markerModel.initPlace(data.result.geometry);
         this.setState({
@@ -191,6 +183,7 @@ class AddEditMarkerContainer extends React.Component {
         placeId
       });
     }
+    console.log("searchResults", searchResults);
     if (searchResults.length === 0) {
       this.setState({isInvalidAddress: true});
     }
@@ -199,6 +192,7 @@ class AddEditMarkerContainer extends React.Component {
   }
 
   hideInvalidAddress = () => {
+    console.log("Called again");
     this.setState({
       isInvalidAddress: false,
       description: ""

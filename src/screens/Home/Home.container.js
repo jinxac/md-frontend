@@ -33,8 +33,9 @@ class HomeContainer extends React.Component {
         });
       })
       .catch((error) => {
-        CustomToast.error(error);
-        console.log("error", error);
+        if (!error.response) {
+          CustomToast.errorByMessage("Server is not responding.");
+        }
       });
   }
 
@@ -43,7 +44,9 @@ class HomeContainer extends React.Component {
     if (loading) {
       return null;
     }
-    return <Home />;
+    return (
+      <Home />
+    );
   }
 }
 

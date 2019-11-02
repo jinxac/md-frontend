@@ -75,6 +75,7 @@ const AddEditMarker = ({
       minWidth: "600px"
     }
   };
+  console.log("isInvalidAddress", isInvalidAddress);
   return (
     <ReactModal
       isOpen={showModal}
