@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "components/Button";
+import {Button} from "reactstrap";
 import AddEditMarker from "components/AddEditMarker";
+import styles from "./Edit.module.css";
 
 const propTypes = {
   marker: PropTypes.object.isRequired,
@@ -17,9 +18,11 @@ const Edit = ({
   return (
     <div>
       <Button
-        description={"Edit"}
+        className={styles.buttonContainer}
         onClick={toggleModal}
-      />
+      >
+        Edit
+      </Button>
       {
         showModal ? (
           <AddEditMarker

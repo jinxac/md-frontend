@@ -3,19 +3,22 @@ import PropTypes from "prop-types";
 import styles from "./Button.module.css";
 
 const defaultProps = {
-  isPrimary: false
+  isPrimary: false,
+  type: "submit"
 };
 
 const propTypes = {
   description: PropTypes.string.isRequired,
   isPrimary: PropTypes.bool,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  type: PropTypes.string
 };
 
 const Button = ({
   description,
   isPrimary,
-  onClick
+  onClick,
+  type
 }) => {
   let className = `${styles.button}`;
   if (isPrimary) {
@@ -24,6 +27,7 @@ const Button = ({
   return (
     <button
       className={className}
+      type={type}
       onClick={onClick}
     >
       {description}

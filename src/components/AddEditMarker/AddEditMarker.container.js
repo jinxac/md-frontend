@@ -55,10 +55,16 @@ class AddEditMarkerContainer extends React.Component {
   }
 
   onLocationChange  = (event) => {
-    this.setState({description: event.target.value});
     const searchText = event.target.value;
     if (searchText.length < 3) {
-      return;
+      this.setState({
+        lat: 0,
+        lng: 0,
+        description: event.target.value
+      });
+      return null;
+    } else {
+      this.setState({description: event.target.value});
     }
 
     const url = AUTOCOMPLETE_END_POINT.format(searchText);
@@ -184,6 +190,20 @@ class AddEditMarkerContainer extends React.Component {
     });
   }
 
+  isButtonSubmitDisabled = () => {
+    const {
+      name,
+      description,
+      lat,
+      lng,
+      placeId
+    } = this.state;
+    if (!name || !description || !lat || !lng || !placeId) {
+      return true;
+    }
+    return false;
+  }
+
   render () {
     const {
       description,
@@ -197,15 +217,20 @@ class AddEditMarkerContainer extends React.Component {
 
     const {
       showModal,
-      toggleModal
+      toggleModal,
+      isEdit
     } = this.props;
+
+    const isSubmitDisabled = this.isButtonSubmitDisabled();
 
     return (
       <AddEditMarker
         closeSearchResults={this.closeSearchResults}
         description={description}
         hideInvalidAddress={this.hideInvalidAddress}
+        isEdit={isEdit}
         isInvalidAddress={isInvalidAddress}
+        isSubmitDisabled={isSubmitDisabled}
         lat={lat}
         lng={lng}
         name={name}

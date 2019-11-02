@@ -1,40 +1,74 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactModal from "react-modal";
-import Button from "components/Button";
+import {Button} from "reactstrap";
+// import Button from "components/Button";
+import styles from "./Delete.module.css";
 
 
 const propTypes = {
+  marker: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired
 };
 
 const Delete = ({
+  marker,
   showModal,
   onDelete,
   toggleModal
 }) => {
+  const customStyles = {
+    overlay: {
+      backgroundColor: "#9E9E9E"
+    },
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      minWidth: "500px",
+      minHeight: "200px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }
+  };
   return (
     <div>
       <Button
-        description={"Delete"}
+        className={styles.buttonContainer}
         onClick={toggleModal}
-      />
+      >
+        Delete
+      </Button>
       <ReactModal
         isOpen={showModal}
+        style={customStyles}
         onRequestClose={toggleModal}
       >
         <div>
-          <p> Are you sure</p>
+          <div className={styles.descriptionContainer}>
+            <span className={styles.description}>
+              Are you sure you want to delete location{" "}
+              <b><i>{marker.name}</i></b>?
+            </span>
+          </div>
           <Button
-            description="Yes"
+            color="danger"
             onClick={onDelete}
-          />
+          >
+            Yes
+          </Button>{" "}
           <Button
-            description="No"
+            color="secondary"
             onClick={toggleModal}
-          />
+          >
+            No
+          </Button>
         </div>
       </ReactModal>
     </div>

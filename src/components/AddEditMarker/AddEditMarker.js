@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import ReactModal from "react-modal";
 import SearchResults from "./components/SearchResults";
 import styles from "./AddEditMarker.module.css";
-import Button from "components/Button";
 
 import {
   Col,
@@ -11,7 +10,7 @@ import {
   FormGroup,
   Label,
   Input,
-  // Button,
+  Button,
   FormText,
   Spinner
 } from "reactstrap";
@@ -28,7 +27,9 @@ const propTypes = {
   closeSearchResults: PropTypes.func.isRequired,
   description: PropTypes.string,
   hideInvalidAddress: PropTypes.func.isRequired,
+  isEdit: PropTypes.bool.isRequired,
   isInvalidAddress: PropTypes.bool.isRequired,
+  isSubmitDisabled: PropTypes.bool.isRequired,
   lat: PropTypes.number,
   lng: PropTypes.number,
   name: PropTypes.string,
@@ -46,7 +47,9 @@ const propTypes = {
 const AddEditMarker = ({
   closeSearchResults,
   description,
+  isEdit,
   isInvalidAddress,
+  isSubmitDisabled,
   lat,
   lng,
   name,
@@ -63,6 +66,13 @@ const AddEditMarker = ({
   const customStyles = {
     overlay: {
       backgroundColor: "#9E9E9E"
+    },
+    content: {
+      top: "20%",
+      left: "30%",
+      right: "auto",
+      bottom: "auto",
+      minWidth: "600px"
     }
   };
   return (
@@ -154,7 +164,25 @@ const AddEditMarker = ({
               />
             </FormGroup>
           </Col>
-          <Button type="submit">Submit</Button>
+          <Col className={styles.action}>
+            <Button
+              className={styles.submitButton}
+              color="primary"
+              disabled={isSubmitDisabled}
+              type="submit"
+            >
+              {isEdit ? "EDIT": "ADD"}
+            </Button>
+            <div className={styles.cancelButtonContainer}>
+              <Button
+                color="secondary"
+                onClick={toggleModal}
+              >
+                CANCEL
+              </Button>
+            </div>
+
+          </Col>
         </Form>
       </div>
     </ReactModal>

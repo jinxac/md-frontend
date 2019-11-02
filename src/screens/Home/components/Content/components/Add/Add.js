@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "components/Button";
+import {Button} from "reactstrap";
 import AddEditMarker from "components/AddEditMarker";
 
 const propTypes = {
@@ -15,10 +15,11 @@ const Add = ({
   return (
     <>
       <Button
-        isPrimary
-        description={"Add Marker"}
+        color="primary"
         onClick={toggleModal}
-      />
+      >
+        Add Marker
+      </Button>
       {
         showModal ? (
           <AddEditMarker

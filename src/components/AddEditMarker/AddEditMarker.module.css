@@ -47,3 +47,16 @@
 .invalidAddressButtonText {
   font-weight: 700;
 }
+
+.action {
+  display: flex;
+}
+
+.cancelButtonContainer {
+  margin-left: 15px;
+}
+
+.submitButton {
+  cursor: not-allowed;
+}
+
