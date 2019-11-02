@@ -15,12 +15,19 @@ import {
 } from "reactstrap";
 
 
+const defaultProps = {
+  description: "",
+  lat: 0,
+  lng: 0,
+  name: ""
+};
+
 const propTypes = {
   closeSearchResults: PropTypes.func.isRequired,
-  description: PropTypes.string.isRequired,
-  lat: PropTypes.number.isRequired,
-  lng: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  lat: PropTypes.number,
+  lng: PropTypes.number,
+  name: PropTypes.string,
   onLocationChange: PropTypes.func.isRequired,
   onLocationSelect: PropTypes.func.isRequired,
   onNameChange: PropTypes.func.isRequired,
@@ -62,6 +69,7 @@ const AddEditMarker = ({
             <FormGroup>
               <Label>Name</Label>
               <Input
+                name={"name"}
                 placeholder="My Location..."
                 type="text"
                 value={name}
@@ -74,6 +82,7 @@ const AddEditMarker = ({
               <Label>Address</Label>
               <Input
                 className={styles.input}
+                name={"address"}
                 placeholder="Search..."
                 type="text"
                 value={description}
@@ -124,6 +133,7 @@ const AddEditMarker = ({
   );
 };
 
+AddEditMarker.defaultProps = defaultProps;
 AddEditMarker.propTypes = propTypes;
 
 export default AddEditMarker;

@@ -61,8 +61,8 @@ class AddEditMarkerContainer extends React.Component {
 
     const url = AUTOCOMPLETE_END_POINT.format(searchText);
     axios.get(url)
-      .then((response) => {
-        this.updateResults(response.data.predictions);
+      .then(({data}) => {
+        this.updateSearchResults(data.predictions);
       })
       .catch((error) => {
         console.log("error", error);
@@ -70,10 +70,6 @@ class AddEditMarkerContainer extends React.Component {
   }
 
   onLocationSelect = (placeId) => {
-    console.log("location selected", placeId);
-    this.setState({
-      placeId
-    });
     const url = PLACE_END_POINT.format(placeId);
     axios.get(url)
       .then(({data}) => {
@@ -154,7 +150,7 @@ class AddEditMarkerContainer extends React.Component {
     });
   }
 
-  updateResults = (data) => {
+  updateSearchResults = (data) => {
     const searchResults = [];
     for (const datum of data) {
       const markerModel = MarkerModel.init(datum);
@@ -220,5 +216,6 @@ AddEditMarkerContainer.propTypes = propTypes;
 
 const withStore = connect(null, mapDispatchToProps);
 
+export {AddEditMarkerContainer};
 
 export default withStore(AddEditMarkerContainer);
