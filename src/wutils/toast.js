@@ -22,7 +22,7 @@ const CustomToast = {
       hideProgressBar: true
     });
   },
-  errorMaps: (errorMessage) => {
+  errorByMessage: (errorMessage) => {
     return toast.error(errorMessage || "Something went wrong", {
       position: toast.POSITION.TOP_RIGHT,
       closeButton: false,
