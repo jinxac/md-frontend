@@ -77,3 +77,8 @@ I have tried to write all basic test cases for this project in an isolated way. 
 6. Input changes
 7. Button Clicks
 
+
+# Points to take care of
+
+1. Google apis do not work with localhost. It gives CORB error. To get that working I used [this](https://alfilatov.com/posts/run-chrome-without-cors/)
+
