@@ -105,9 +105,11 @@ describe("<AddEditMarkerContainer />", () => {
         placeId: "place-id-2"
       }
     ];
+
     mockAdapter.onGet(url).reply(() => {
       return [200, {
-        predictions: searchResults
+        predictions: searchResults,
+        status: "OK"
       }];
     });
 
@@ -124,6 +126,8 @@ describe("<AddEditMarkerContainer />", () => {
         name: "address"
       }
     });
+
+
     wrapper.update();
 
     const instance = wrapper.instance();
@@ -137,7 +141,6 @@ describe("<AddEditMarkerContainer />", () => {
 
     await flushPromises();
     expect(instance.state.searchResults).toEqual(searchResults);
-    wrapper.update();
   });
 
   it("should change location in state", async () => {
@@ -168,11 +171,12 @@ describe("<AddEditMarkerContainer />", () => {
 
     mockAdapter.onGet(placeUrl).reply(() => {
       return [200, {
-        ...location
+        ...location,
+        status: "OK"
       }];
     });
 
-    const flushPromises = () => new Promise(resolve => setTimeout(resolve));
+
 
 
     const wrapper = mount(
@@ -180,6 +184,9 @@ describe("<AddEditMarkerContainer />", () => {
         {...props}
       />
     );
+
+    const flushPromise1 = () => new Promise(resolve => setTimeout(resolve));
+
 
     wrapper.setState({
       searchResults: [
@@ -194,13 +201,17 @@ describe("<AddEditMarkerContainer />", () => {
       ]
     });
 
+    await flushPromise1();
 
-    const instance = wrapper.instance();
+
     wrapper.update();
-
+    const instance = wrapper.instance();
+    const flushPromise2 = () => new Promise(resolve => setTimeout(resolve));
 
     wrapper.find("SearchResults").prop("onLocationSelect")("place-id-1");
-    await flushPromises();
+    await flushPromise2();
+
+
     expect(instance.state.lat).toEqual(location.result.geometry.location.lat);
     expect(instance.state.lng).toEqual(location.result.geometry.location.lng);
     expect(instance.state.description).toEqual(location.result.description);

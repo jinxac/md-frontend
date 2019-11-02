@@ -25,7 +25,7 @@ class AddContainer extends React.Component {
   }
 }
 
-
+export {AddContainer};
 
 export default AddContainer;
 

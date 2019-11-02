@@ -3,7 +3,7 @@ import {toast} from "react-toastify";
 
 const CustomToast = {
   success: (message) => {
-    return toast.success(message, {
+    toast.success(message, {
       position: toast.POSITION.TOP_RIGHT,
       closeButton: false,
       autoClose: 3000,

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ToastContainer} from "react-toastify";
 import {deleteMarker} from "data/markers/actions";
 import {DELETE_MARKER} from "api/endPoints";
 import axios from "api/axios";
@@ -32,9 +31,9 @@ class DeleteContainer extends React.Component {
     const url = DELETE_MARKER.format(marker.id);
     axios.delete(url, payload)
       .then(() => {
+        CustomToast.success("Marker deleted successfully");
         this.toggleModal();
         deleteMarker(payload);
-        CustomToast.success("Marker deleted successfully");
       })
       .catch((error) => {
         this.toggleModal();
@@ -52,15 +51,12 @@ class DeleteContainer extends React.Component {
     const {marker} = this.props;
     const {showModal} = this.state;
     return (
-      <div>
-        <ToastContainer />
-        <Delete
-          marker={marker}
-          showModal={showModal}
-          toggleModal={this.toggleModal}
-          onDelete={this.onDelete}
-        />
-      </div>
+      <Delete
+        marker={marker}
+        showModal={showModal}
+        toggleModal={this.toggleModal}
+        onDelete={this.onDelete}
+      />
     );
   }
 }
@@ -75,5 +71,7 @@ const withStore = connect(null, mapDispatchToProps);
 
 
 DeleteContainer.propTypes = propTypes;
+
+export {DeleteContainer};
 
 export default withStore(DeleteContainer);
