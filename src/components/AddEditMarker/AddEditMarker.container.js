@@ -183,7 +183,6 @@ class AddEditMarkerContainer extends React.Component {
         placeId
       });
     }
-    console.log("searchResults", searchResults);
     if (searchResults.length === 0) {
       this.setState({isInvalidAddress: true});
     }
@@ -192,7 +191,6 @@ class AddEditMarkerContainer extends React.Component {
   }
 
   hideInvalidAddress = () => {
-    console.log("Called again");
     this.setState({
       isInvalidAddress: false,
       description: ""
