@@ -1,5 +1,6 @@
 import React from "react";
 import Home from "screens/Home";
+import {ToastContainer} from "react-toastify";
 import {
   Online,
   Offline
@@ -11,6 +12,7 @@ const App = () => {
     <div>
       <Online>
         <Home />
+        <ToastContainer />
       </Online>
       <Offline>
         <div
