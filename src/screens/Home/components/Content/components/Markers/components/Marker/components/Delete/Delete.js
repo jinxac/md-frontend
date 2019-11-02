@@ -45,32 +45,37 @@ const Delete = ({
       >
         Delete
       </Button>
-      <ReactModal
-        isOpen={showModal}
-        style={customStyles}
-        onRequestClose={toggleModal}
-      >
-        <div>
-          <div className={styles.descriptionContainer}>
-            <span className={styles.description}>
-              Are you sure you want to delete location{" "}
-              <b><i>{marker.name}</i></b>?
-            </span>
-          </div>
-          <Button
-            color="danger"
-            onClick={onDelete}
+      {
+        showModal ? (
+          <ReactModal
+            isOpen={showModal}
+            style={customStyles}
+            onRequestClose={toggleModal}
           >
-            Yes
-          </Button>{" "}
-          <Button
-            color="secondary"
-            onClick={toggleModal}
-          >
-            No
-          </Button>
-        </div>
-      </ReactModal>
+            <div>
+              <div className={styles.descriptionContainer}>
+                <span className={styles.description}>
+                  Are you sure you want to delete location{" "}
+                  <b><i>{marker.name}</i></b>?
+                </span>
+              </div>
+              <Button
+                color="danger"
+                onClick={onDelete}
+              >
+                Yes
+              </Button>{" "}
+              <Button
+                color="secondary"
+                onClick={toggleModal}
+              >
+                No
+              </Button>
+            </div>
+          </ReactModal>
+        ) : null
+      }
+
     </div>
   );
 };

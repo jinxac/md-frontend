@@ -1,6 +1,6 @@
 import React from "react";
 import {shallow} from "enzyme";
-import EditContainer from "../Edit.container";
+import {EditContainer} from "../Edit.container";
 
 describe("<EditContainer />", () => {
   it("should render without crash", () => {

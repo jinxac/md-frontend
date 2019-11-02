@@ -1,6 +1,6 @@
 import React from "react";
 import {shallow} from "enzyme";
-import AddContainer from "../Add.container";
+import {AddContainer} from "../Add.container";
 
 describe("<AddContainer />", () => {
   it("should render without crash", () => {

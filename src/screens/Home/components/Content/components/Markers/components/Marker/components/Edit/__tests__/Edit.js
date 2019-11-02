@@ -33,8 +33,8 @@ describe("<Edit />", () => {
     const toggleModal = jest.fn();
     const wrapper = shallow(
       <Edit
-        marker={{}}
         showModal
+        marker={{}}
         toggleModal={toggleModal}
       />
     );

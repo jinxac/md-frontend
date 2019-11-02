@@ -9,6 +9,7 @@ describe("<Delete />", () => {
   it("should render without crashing", () => {
     const wrapper = shallow(
       <Delete
+        marker={{}}
         showModal={false}
         toggleModal={toggleModal}
         onDelete={onDelete}
@@ -20,6 +21,7 @@ describe("<Delete />", () => {
     const wrapper = shallow(
       <Delete
         showModal
+        marker={{}}
         toggleModal={toggleModal}
         onDelete={onDelete}
       />
@@ -27,10 +29,10 @@ describe("<Delete />", () => {
     expect(wrapper.children().length).toEqual(2);
   });
   it("should check prop functions", () => {
-
     const wrapper = shallow(
       <Delete
         showModal
+        marker={{}}
         toggleModal={toggleModal}
         onDelete={onDelete}
       />

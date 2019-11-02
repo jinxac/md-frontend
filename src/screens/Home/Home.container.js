@@ -6,6 +6,7 @@ import {GET_MARKERS} from "api/endPoints";
 import {addMarker} from "data/markers/actions";
 import CustomArray from "models/CustomArray";
 import MarkerModel from "models/MarkerModel";
+import CustomToast from "wutils/toast";
 import Home from "./Home";
 
 const propTypes = {
@@ -32,6 +33,7 @@ class HomeContainer extends React.Component {
         });
       })
       .catch((error) => {
+        CustomToast.error(error);
         console.log("error", error);
       });
   }

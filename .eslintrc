@@ -24,7 +24,8 @@
   "describe": false,
   "expect": false,
   "it": false,
-  "jest": false
+  "jest": false,
+  "beforeEach": false
 },
 'extends': ['eslint:recommended', 'plugin:react/recommended'],
 'rules': {

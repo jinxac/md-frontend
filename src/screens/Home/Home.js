@@ -1,4 +1,5 @@
 import React from "react";
+import {ToastContainer} from "react-toastify";
 import MapView from "./components/MapView";
 import Content from "./components/Content";
 import styles from "./Home.module.css";
@@ -12,6 +13,7 @@ const Home = () => {
       <div className={styles.contentContainer}>
         <Content />
       </div>
+      <ToastContainer />
     </>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   addMarker,
@@ -10,6 +9,7 @@ import {
 import AddEditMarker from "./AddEditMarker";
 import axios from "api/axios";
 import MarkerModel from "models/MarkerModel";
+import CustomArray from "models/CustomArray";
 import {
   AUTOCOMPLETE_END_POINT,
   PLACE_END_POINT,
@@ -78,7 +78,7 @@ class AddEditMarkerContainer extends React.Component {
           CustomToast.errorMaps(data.errorMessage);
           return null;
         }
-        this.updateSearchResults(data.predictions);
+        this.updateSearchResults(data);
       })
       .catch((error) => {
         CustomToast.errorMaps(error.errorMessage);
@@ -177,7 +177,8 @@ class AddEditMarkerContainer extends React.Component {
 
   updateSearchResults = (data) => {
     const searchResults = [];
-    for (const datum of data) {
+    const predictions = CustomArray.init(data.predictions);
+    for (const datum of predictions) {
       const markerModel = MarkerModel.init(datum);
       const {
         description,
@@ -193,6 +194,7 @@ class AddEditMarkerContainer extends React.Component {
     if (searchResults.length === 0) {
       this.setState({isInvalidAddress: true});
     }
+
     this.setState({searchResults});
   }
 
@@ -237,29 +239,25 @@ class AddEditMarkerContainer extends React.Component {
     const isSubmitDisabled = this.isButtonSubmitDisabled();
 
     return (
-      <div>
-        <AddEditMarker
-          closeSearchResults={this.closeSearchResults}
-          description={description}
-          hideInvalidAddress={this.hideInvalidAddress}
-          isEdit={isEdit}
-          isInvalidAddress={isInvalidAddress}
-          isSubmitDisabled={isSubmitDisabled}
-          lat={lat}
-          lng={lng}
-          name={name}
-          searchResults={searchResults}
-          showAddressSpinner={showAddressSpinner}
-          showModal={showModal}
-          toggleModal={toggleModal}
-          onLocationChange={this.onLocationChange}
-          onLocationSelect={this.onLocationSelect}
-          onNameChange={this.onNameChange}
-          onSubmit={this.onSubmit}
-        />
-        <ToastContainer />
-      </div>
-
+      <AddEditMarker
+        closeSearchResults={this.closeSearchResults}
+        description={description}
+        hideInvalidAddress={this.hideInvalidAddress}
+        isEdit={isEdit}
+        isInvalidAddress={isInvalidAddress}
+        isSubmitDisabled={isSubmitDisabled}
+        lat={lat}
+        lng={lng}
+        name={name}
+        searchResults={searchResults}
+        showAddressSpinner={showAddressSpinner}
+        showModal={showModal}
+        toggleModal={toggleModal}
+        onLocationChange={this.onLocationChange}
+        onLocationSelect={this.onLocationSelect}
+        onNameChange={this.onNameChange}
+        onSubmit={this.onSubmit}
+      />
     );
   }
 }

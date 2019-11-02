@@ -30,6 +30,9 @@ class EditContainer extends React.Component {
   }
 }
 
+export {EditContainer};
+
+
 EditContainer.propTypes = propTypes;
 
 export default EditContainer;
