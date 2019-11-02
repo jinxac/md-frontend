@@ -5,16 +5,7 @@ import {
 
 describe("markers reducer", () => {
   it("should return the initial state", () => {
-    expect(markers(undefined, {})).toEqual(
-      [
-        {
-          description: "Test address 1",
-          placeId: "ChIJtYuu0V25j4ARwu5e4wwRYgE",
-          lat: 37.4267861,
-          lng: -122.0806032
-        }
-      ]
-    );
+    expect(markers(undefined, {})).toEqual([]);
   });
 
   it("should add marker", () => {
@@ -34,12 +25,6 @@ describe("markers reducer", () => {
         placeId: "ChIJtYuu0V25j4ARwu5e4wwRYgE",
         lat: 37.4267861,
         lng: -122.0806032
-      },
-      {
-        description: "Test address 1",
-        placeId: "ChIJtYuu0V25j4ARwu5e4wwRYgE",
-        lat: 37.4267861,
-        lng: -122.0806032
       }
     ]);
   });
@@ -47,7 +32,14 @@ describe("markers reducer", () => {
 
   it("should edit marker", () => {
     expect(
-      markers(undefined, {
+      markers([
+        {
+          description: "Test address 1",
+          placeId: "ChIJtYuu0V25j4ARwu5e4wwRYgE",
+          lat: 37.4267861,
+          lng: -122.0806032
+        }
+      ], {
         type: EDIT_MARKER,
         payload: {
           description: "Test address 2",
@@ -69,7 +61,14 @@ describe("markers reducer", () => {
 
   it("should delete marker", () => {
     expect(
-      markers(undefined, {
+      markers([
+        {
+          description: "Test address 1",
+          placeId: "ChIJtYuu0V25j4ARwu5e4wwRYgE",
+          lat: 37.4267861,
+          lng: -122.0806032
+        }
+      ], {
         type: DELETE_MARKER,
         payload: {
           description: "Test address 1",

@@ -88,4 +88,20 @@ body {
 
 button {
   cursor: pointer;
+  font-size: 13px !important;
+}
+
+h3 {
+  font-family: 'Nunito';
+  font-weight: 700;
+}
+
+h4 {
+  font-family: 'Nunito';
+  font-weight: 700;
+}
+
+span {
+  font-family: 'Nunito';
+  display: block;
 }

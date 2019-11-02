@@ -20,7 +20,6 @@ class EditContainer extends React.Component {
   render () {
     const {marker} = this.props;
     const {showModal} = this.state;
-    console.log("marker in edit", marker);
     return (
       <Edit
         marker={marker}

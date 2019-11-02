@@ -5,28 +5,40 @@ import SearchResults from "./components/SearchResults";
 import styles from "./AddEditMarker.module.css";
 
 import {
-  // Container,
   Col,
   Form,
   FormGroup,
   Label,
   Input,
   Button,
-  FormText
+  FormText,
+  Spinner
 } from "reactstrap";
 
 
+const defaultProps = {
+  description: "",
+  lat: 0,
+  lng: 0,
+  name: ""
+};
+
 const propTypes = {
   closeSearchResults: PropTypes.func.isRequired,
-  description: PropTypes.string.isRequired,
-  lat: PropTypes.number.isRequired,
-  lng: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  hideInvalidAddress: PropTypes.func.isRequired,
+  isEdit: PropTypes.bool.isRequired,
+  isInvalidAddress: PropTypes.bool.isRequired,
+  isSubmitDisabled: PropTypes.bool.isRequired,
+  lat: PropTypes.number,
+  lng: PropTypes.number,
+  name: PropTypes.string,
   onLocationChange: PropTypes.func.isRequired,
   onLocationSelect: PropTypes.func.isRequired,
   onNameChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   searchResults: PropTypes.array.isRequired,
+  showAddressSpinner: PropTypes.bool.isRequired,
   showModal: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired
 };
@@ -35,6 +47,9 @@ const propTypes = {
 const AddEditMarker = ({
   closeSearchResults,
   description,
+  isEdit,
+  isInvalidAddress,
+  isSubmitDisabled,
   lat,
   lng,
   name,
@@ -43,12 +58,21 @@ const AddEditMarker = ({
   onNameChange,
   showModal,
   toggleModal,
+  hideInvalidAddress,
   searchResults,
+  showAddressSpinner,
   onSubmit
 }) => {
   const customStyles = {
     overlay: {
       backgroundColor: "#9E9E9E"
+    },
+    content: {
+      top: "20%",
+      left: "30%",
+      right: "auto",
+      bottom: "auto",
+      minWidth: "600px"
     }
   };
   return (
@@ -63,6 +87,7 @@ const AddEditMarker = ({
             <FormGroup>
               <Label>Name</Label>
               <Input
+                name={"name"}
                 placeholder="My Location..."
                 type="text"
                 value={name}
@@ -75,11 +100,32 @@ const AddEditMarker = ({
               <Label>Address</Label>
               <Input
                 className={styles.input}
+                name={"address"}
                 placeholder="Search..."
                 type="text"
                 value={description}
                 onChange={onLocationChange}
               />
+              {
+                showAddressSpinner ? (
+                  <div className={styles.addressLoadingIndicatorContainer}>
+                    <Spinner className={styles.spinner} />
+                  </div>
+                ) : null
+              }
+              {
+                isInvalidAddress ? (
+                  <div className={styles.invalidAddressContainer}>
+                    <span className={styles.invalidAddressSpan}>No Result Found</span>
+                    <div
+                      className={styles.invalidAddressButton}
+                      onClick={hideInvalidAddress}
+                    >
+                      <span className={styles.invalidAddressButtonText}>Try Again</span>
+                    </div>
+                  </div>
+                ) : null
+              }
               <FormText>Enter 3 characters for search to work...</FormText>
             </FormGroup>
             {
@@ -118,59 +164,32 @@ const AddEditMarker = ({
               />
             </FormGroup>
           </Col>
-          <Button type="submit">Submit</Button>
+          <Col className={styles.action}>
+            <Button
+              className={styles.submitButton}
+              color="primary"
+              disabled={isSubmitDisabled}
+              type="submit"
+            >
+              {isEdit ? "SAVE" : "ADD"}
+            </Button>
+            <div className={styles.cancelButtonContainer}>
+              <Button
+                color="secondary"
+                onClick={toggleModal}
+              >
+                CANCEL
+              </Button>
+            </div>
+
+          </Col>
         </Form>
-        {/* <form onSubmit={onSubmit}>
-          <label>
-            Name:
-            <input
-              className={styles.input}
-              type="text"
-              onChange={onNameChange}
-            />
-          </label>
-          <label>
-          Address:
-            <input
-              className={styles.input}
-              type="text"
-              value={description}
-              onChange={onLocationChange}
-            />
-          </label>
-          {
-            searchResults.length > 0 ? (
-              <SearchResults
-                searchResults={searchResults}
-                onLocationSelect={onLocationSelect}
-              />
-            ) : null
-          }
-          <label>
-            Latitude:
-            <input
-              disabled
-              className={styles.input}
-              type="text"
-              value={lat}
-            />
-          </label>
-          <label>
-            Longitude:
-            <input
-              disabled
-              className={styles.input}
-              type="text"
-              value={lng}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form> */}
       </div>
     </ReactModal>
   );
 };
 
+AddEditMarker.defaultProps = defaultProps;
 AddEditMarker.propTypes = propTypes;
 
 export default AddEditMarker;

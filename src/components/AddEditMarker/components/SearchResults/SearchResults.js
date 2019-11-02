@@ -23,6 +23,7 @@ const SearchResults = ({
     content.push(
       <div
         className={styles.result}
+        key={placeId}
         onClick={() => {
           onLocationSelect(placeId);
           closeSearchResults();

@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {ToastContainer} from "react-toastify";
 import {deleteMarker} from "data/markers/actions";
 import {DELETE_MARKER} from "api/endPoints";
 import axios from "api/axios";
 import Delete from "./Delete";
+import CustomToast from "wutils/toast";
 
 
 const propTypes = {
@@ -32,10 +34,11 @@ class DeleteContainer extends React.Component {
       .then(() => {
         this.toggleModal();
         deleteMarker(payload);
+        CustomToast.success("Marker deleted successfully");
       })
       .catch((error) => {
         this.toggleModal();
-        console.log("error", error);
+        CustomToast.error(error);
       });
   }
 
@@ -49,12 +52,15 @@ class DeleteContainer extends React.Component {
     const {marker} = this.props;
     const {showModal} = this.state;
     return (
-      <Delete
-        marker={marker}
-        showModal={showModal}
-        toggleModal={this.toggleModal}
-        onDelete={this.onDelete}
-      />
+      <div>
+        <ToastContainer />
+        <Delete
+          marker={marker}
+          showModal={showModal}
+          toggleModal={this.toggleModal}
+          onDelete={this.onDelete}
+        />
+      </div>
     );
   }
 }

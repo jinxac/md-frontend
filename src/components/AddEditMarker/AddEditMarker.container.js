@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   addMarker,
   editMarker
@@ -8,14 +10,13 @@ import {
 import AddEditMarker from "./AddEditMarker";
 import axios from "api/axios";
 import MarkerModel from "models/MarkerModel";
-// import AutoCompleteModel from "models/AutoCompleteModel";
-// import PlaceModel from "models/PlaceModel";
 import {
   AUTOCOMPLETE_END_POINT,
   PLACE_END_POINT,
   POST_MARKER,
   UPDATE_MARKER
 } from "api/endPoints";
+import CustomToast from "wutils/toast";
 
 const defaultProps = {
   isEdit: false,
@@ -39,7 +40,9 @@ class AddEditMarkerContainer extends React.Component {
     lat: 0,
     lng: 0,
     description: "",
-    placeId: ""
+    placeId: "",
+    showAddressSpinner: false,
+    isInvalidAddress: false
   }
 
 
@@ -55,30 +58,44 @@ class AddEditMarkerContainer extends React.Component {
   }
 
   onLocationChange  = (event) => {
-    this.setState({description: event.target.value});
     const searchText = event.target.value;
     if (searchText.length < 3) {
-      return;
+      this.setState({
+        lat: 0,
+        lng: 0,
+        description: event.target.value
+      });
+      return null;
+    } else {
+      this.setState({description: event.target.value});
     }
 
     const url = AUTOCOMPLETE_END_POINT.format(searchText);
+    this.setState({showAddressSpinner: true});
     axios.get(url)
-      .then((response) => {
-        this.updateResults(response.data.predictions);
+      .then(({data}) => {
+        if (data.status !== "OK") {
+          CustomToast.errorMaps(data.errorMessage);
+          return null;
+        }
+        this.updateSearchResults(data.predictions);
       })
       .catch((error) => {
-        console.log("error", error);
+        CustomToast.errorMaps(error.errorMessage);
+      })
+      .finally(() => {
+        this.setState({showAddressSpinner: false});
       });
   }
 
   onLocationSelect = (placeId) => {
-    console.log("location selected", placeId);
-    this.setState({
-      placeId
-    });
     const url = PLACE_END_POINT.format(placeId);
     axios.get(url)
       .then(({data}) => {
+        if (data.status !== "OK") {
+          CustomToast.errorMaps(data.errorMessage);
+          return null;
+        }
         const markerModel = MarkerModel.init(data.result);
         markerModel.initPlace(data.result.geometry);
         this.setState({
@@ -89,7 +106,7 @@ class AddEditMarkerContainer extends React.Component {
         });
       })
       .catch((error) => {
-        console.log("error", error);
+        CustomToast.errorMaps(error.errorMessage);
       });
   }
 
@@ -126,19 +143,21 @@ class AddEditMarkerContainer extends React.Component {
       axios.put(url, payload)
         .then(({data}) => {
           const markerModel = MarkerModel.init(data);
+          CustomToast.success("Marker edited successfully");
           editMarker(markerModel, marker.placeId);
         })
         .catch((error) => {
-          console.log("error", error);
+          CustomToast.error(error);
         });
     } else {
       axios.post(POST_MARKER, payload)
         .then(({data}) => {
           const markerModel = MarkerModel.init(data);
+          CustomToast.success("Marker added successfully");
           addMarker(markerModel);
         })
         .catch((error) => {
-          console.log("error", error);
+          CustomToast.error(error);
         });
     }
     this.props.toggleModal();
@@ -156,7 +175,7 @@ class AddEditMarkerContainer extends React.Component {
     });
   }
 
-  updateResults = (data) => {
+  updateSearchResults = (data) => {
     const searchResults = [];
     for (const datum of data) {
       const markerModel = MarkerModel.init(datum);
@@ -171,7 +190,31 @@ class AddEditMarkerContainer extends React.Component {
         placeId
       });
     }
+    if (searchResults.length === 0) {
+      this.setState({isInvalidAddress: true});
+    }
     this.setState({searchResults});
+  }
+
+  hideInvalidAddress = () => {
+    this.setState({
+      isInvalidAddress: false,
+      description: ""
+    });
+  }
+
+  isButtonSubmitDisabled = () => {
+    const {
+      name,
+      description,
+      lat,
+      lng,
+      placeId
+    } = this.state;
+    if (!name || !description || !lat || !lng || !placeId) {
+      return true;
+    }
+    return false;
   }
 
   render () {
@@ -180,31 +223,43 @@ class AddEditMarkerContainer extends React.Component {
       searchResults,
       lat,
       lng,
-      name
+      name,
+      showAddressSpinner,
+      isInvalidAddress
     } = this.state;
 
     const {
       showModal,
-      toggleModal
+      toggleModal,
+      isEdit
     } = this.props;
 
-    console.log("state", this.state);
+    const isSubmitDisabled = this.isButtonSubmitDisabled();
 
     return (
-      <AddEditMarker
-        closeSearchResults={this.closeSearchResults}
-        description={description}
-        lat={lat}
-        lng={lng}
-        name={name}
-        searchResults={searchResults}
-        showModal={showModal}
-        toggleModal={toggleModal}
-        onLocationChange={this.onLocationChange}
-        onLocationSelect={this.onLocationSelect}
-        onNameChange={this.onNameChange}
-        onSubmit={this.onSubmit}
-      />
+      <div>
+        <AddEditMarker
+          closeSearchResults={this.closeSearchResults}
+          description={description}
+          hideInvalidAddress={this.hideInvalidAddress}
+          isEdit={isEdit}
+          isInvalidAddress={isInvalidAddress}
+          isSubmitDisabled={isSubmitDisabled}
+          lat={lat}
+          lng={lng}
+          name={name}
+          searchResults={searchResults}
+          showAddressSpinner={showAddressSpinner}
+          showModal={showModal}
+          toggleModal={toggleModal}
+          onLocationChange={this.onLocationChange}
+          onLocationSelect={this.onLocationSelect}
+          onNameChange={this.onNameChange}
+          onSubmit={this.onSubmit}
+        />
+        <ToastContainer />
+      </div>
+
     );
   }
 }
@@ -224,5 +279,6 @@ AddEditMarkerContainer.propTypes = propTypes;
 
 const withStore = connect(null, mapDispatchToProps);
 
+export {AddEditMarkerContainer};
 
 export default withStore(AddEditMarkerContainer);
