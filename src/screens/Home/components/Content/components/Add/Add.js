@@ -13,7 +13,7 @@ const Add = ({
   toggleModal
 }) => {
   return (
-    <div>
+    <>
       <Button
         isPrimary
         description={"Add Marker"}
@@ -27,7 +27,7 @@ const Add = ({
           />
         ) : null
       }
-    </div>
+    </>
   );
 };
 

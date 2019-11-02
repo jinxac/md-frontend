@@ -5,7 +5,6 @@ import SearchResults from "./components/SearchResults";
 import styles from "./AddEditMarker.module.css";
 
 import {
-  // Container,
   Col,
   Form,
   FormGroup,
@@ -120,52 +119,6 @@ const AddEditMarker = ({
           </Col>
           <Button type="submit">Submit</Button>
         </Form>
-        {/* <form onSubmit={onSubmit}>
-          <label>
-            Name:
-            <input
-              className={styles.input}
-              type="text"
-              onChange={onNameChange}
-            />
-          </label>
-          <label>
-          Address:
-            <input
-              className={styles.input}
-              type="text"
-              value={description}
-              onChange={onLocationChange}
-            />
-          </label>
-          {
-            searchResults.length > 0 ? (
-              <SearchResults
-                searchResults={searchResults}
-                onLocationSelect={onLocationSelect}
-              />
-            ) : null
-          }
-          <label>
-            Latitude:
-            <input
-              disabled
-              className={styles.input}
-              type="text"
-              value={lat}
-            />
-          </label>
-          <label>
-            Longitude:
-            <input
-              disabled
-              className={styles.input}
-              type="text"
-              value={lng}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form> */}
       </div>
     </ReactModal>
   );

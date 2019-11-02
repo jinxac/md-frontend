@@ -3,7 +3,7 @@ import {shallow} from "enzyme";
 import Button from "../Button";
 
 describe("<Button />", () => {
-  it("should render with crashing", () => {
+  it("should render without crashing", () => {
     const description = "test";
     const onClick = jest.fn();
     const wrapper = shallow(

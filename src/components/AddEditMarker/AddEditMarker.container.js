@@ -8,8 +8,6 @@ import {
 import AddEditMarker from "./AddEditMarker";
 import axios from "api/axios";
 import MarkerModel from "models/MarkerModel";
-// import AutoCompleteModel from "models/AutoCompleteModel";
-// import PlaceModel from "models/PlaceModel";
 import {
   AUTOCOMPLETE_END_POINT,
   PLACE_END_POINT,
@@ -187,8 +185,6 @@ class AddEditMarkerContainer extends React.Component {
       showModal,
       toggleModal
     } = this.props;
-
-    console.log("state", this.state);
 
     return (
       <AddEditMarker
