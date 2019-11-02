@@ -10,3 +10,40 @@
   left: 15px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
+
+.addressLoadingIndicatorContainer {
+  position: absolute;
+  right: 30px;
+  margin-top: -30px;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: .2em solid currentColor;
+  border-right-color: transparent;
+}
+
+.invalidAddressContainer {
+  position: absolute;
+  right: 30px;
+  margin-top: -30px;
+  display: flex;
+  align-items: center;
+}
+
+.invalidAddressSpan {
+  font-size: 11px;
+  margin-right: 5px;
+  color: #ef1328;
+}
+
+.invalidAddressButton {
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.invalidAddressButtonText {
+  font-weight: 700;
+}

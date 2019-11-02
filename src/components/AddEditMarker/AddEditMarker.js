@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ReactModal from "react-modal";
 import SearchResults from "./components/SearchResults";
 import styles from "./AddEditMarker.module.css";
+import Button from "components/Button";
 
 import {
   Col,
@@ -10,8 +11,9 @@ import {
   FormGroup,
   Label,
   Input,
-  Button,
-  FormText
+  // Button,
+  FormText,
+  Spinner
 } from "reactstrap";
 
 
@@ -25,6 +27,8 @@ const defaultProps = {
 const propTypes = {
   closeSearchResults: PropTypes.func.isRequired,
   description: PropTypes.string,
+  hideInvalidAddress: PropTypes.func.isRequired,
+  isInvalidAddress: PropTypes.bool.isRequired,
   lat: PropTypes.number,
   lng: PropTypes.number,
   name: PropTypes.string,
@@ -33,6 +37,7 @@ const propTypes = {
   onNameChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   searchResults: PropTypes.array.isRequired,
+  showAddressSpinner: PropTypes.bool.isRequired,
   showModal: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired
 };
@@ -41,6 +46,7 @@ const propTypes = {
 const AddEditMarker = ({
   closeSearchResults,
   description,
+  isInvalidAddress,
   lat,
   lng,
   name,
@@ -49,7 +55,9 @@ const AddEditMarker = ({
   onNameChange,
   showModal,
   toggleModal,
+  hideInvalidAddress,
   searchResults,
+  showAddressSpinner,
   onSubmit
 }) => {
   const customStyles = {
@@ -88,6 +96,26 @@ const AddEditMarker = ({
                 value={description}
                 onChange={onLocationChange}
               />
+              {
+                showAddressSpinner ? (
+                  <div className={styles.addressLoadingIndicatorContainer}>
+                    <Spinner className={styles.spinner} />
+                  </div>
+                ) : null
+              }
+              {
+                isInvalidAddress ? (
+                  <div className={styles.invalidAddressContainer}>
+                    <span className={styles.invalidAddressSpan}>No Result Found</span>
+                    <div
+                      className={styles.invalidAddressButton}
+                      onClick={hideInvalidAddress}
+                    >
+                      <span className={styles.invalidAddressButtonText}>Try Again</span>
+                    </div>
+                  </div>
+                ) : null
+              }
               <FormText>Enter 3 characters for search to work...</FormText>
             </FormGroup>
             {

@@ -37,7 +37,9 @@ class AddEditMarkerContainer extends React.Component {
     lat: 0,
     lng: 0,
     description: "",
-    placeId: ""
+    placeId: "",
+    showAddressSpinner: false,
+    isInvalidAddress: false
   }
 
 
@@ -60,12 +62,16 @@ class AddEditMarkerContainer extends React.Component {
     }
 
     const url = AUTOCOMPLETE_END_POINT.format(searchText);
+    this.setState({showAddressSpinner: true});
     axios.get(url)
       .then(({data}) => {
         this.updateSearchResults(data.predictions);
       })
       .catch((error) => {
         console.log("error", error);
+      })
+      .finally(() => {
+        this.setState({showAddressSpinner: false});
       });
   }
 
@@ -165,7 +171,17 @@ class AddEditMarkerContainer extends React.Component {
         placeId
       });
     }
+    if (searchResults.length === 0) {
+      this.setState({isInvalidAddress: true});
+    }
     this.setState({searchResults});
+  }
+
+  hideInvalidAddress = () => {
+    this.setState({
+      isInvalidAddress: false,
+      description: ""
+    });
   }
 
   render () {
@@ -174,7 +190,9 @@ class AddEditMarkerContainer extends React.Component {
       searchResults,
       lat,
       lng,
-      name
+      name,
+      showAddressSpinner,
+      isInvalidAddress
     } = this.state;
 
     const {
@@ -186,10 +204,13 @@ class AddEditMarkerContainer extends React.Component {
       <AddEditMarker
         closeSearchResults={this.closeSearchResults}
         description={description}
+        hideInvalidAddress={this.hideInvalidAddress}
+        isInvalidAddress={isInvalidAddress}
         lat={lat}
         lng={lng}
         name={name}
         searchResults={searchResults}
+        showAddressSpinner={showAddressSpinner}
         showModal={showModal}
         toggleModal={toggleModal}
         onLocationChange={this.onLocationChange}

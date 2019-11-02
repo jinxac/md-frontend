@@ -23,6 +23,14 @@ const Markers = ({markers}) => {
 
   return (
     <div className={styles.container}>
+      {
+        content.length === 0 ? (
+          <div>
+            <h3>No Markers Present!!</h3>
+            <p>Please try adding markers using Add marker button</p>
+          </div>
+        ) : null
+      }
       {content}
     </div>
   );

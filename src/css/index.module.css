@@ -89,3 +89,12 @@ body {
 button {
   cursor: pointer;
 }
+
+h3 {
+  font-family: 'Nunito';
+  font-weight: 700;
+}
+
+span {
+  font-family: 'Nunito';
+}
