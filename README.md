@@ -32,7 +32,7 @@
 5. `Delete Marker` opens a modal which asks for confirmation. YES deletes the marker from map as well as content, NO just toggles the modal.
 6. If there is no internet connection , a no- internet message is shown, once the internet becomes available the page is shown again.
 
-# Guidelines Questions
+# Questions
 
 1. ***How do you handle configuration values? What if those values change?***
 
