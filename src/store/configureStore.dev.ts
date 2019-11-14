@@ -4,13 +4,12 @@ import {
   compose
 } from "redux";
 import {createLogger} from "redux-logger";
-import reducer from "data/reducer";
+import {reducer} from "data/reducer.js";
 
 
-const configureStore = preloadedState => {
+const configureStore = () => {
   const store = createStore(
     reducer,
-    preloadedState,
     compose(
       applyMiddleware(createLogger())
     )

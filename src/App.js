@@ -7,6 +7,14 @@ import {
 } from "react-detect-offline";
 
 
+String.prototype.format = function () {
+  let i = 0;
+  const args = arguments;
+  return this.replace(/{}/g, function () {
+    return typeof args[i] !== "undefined" ? args[i++] : "";
+  });
+};
+
 const App = () => {
   return (
     <div>
